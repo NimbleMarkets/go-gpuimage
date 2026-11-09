@@ -406,6 +406,7 @@ With [Task](https://taskfile.dev) installed, `task list` shows every task.
 | --- | --- | --- |
 | `task` | Race tests and builds of examples, the browser runner, and WASM | Nothing |
 | `task ci` | Everything CI runs: race tests, vet, WASM build, Node tests | Node |
+| `task fuzz-smoke` | Every fuzz target for `FUZZTIME` (default 10s) each | Nothing |
 | `task test-gpu` | The full suite on a native adapter | A GPU |
 | `task bench` | Clear and readback benchmarks, three runs per case | A GPU |
 | `task test-browser` | The full suite in headless Chrome | Chrome with WebGPU |

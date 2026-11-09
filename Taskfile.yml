@@ -79,6 +79,17 @@ tasks:
     cmds:
       - GOOS=js GOARCH=wasm go test -exec="$(go env GOROOT)/lib/wasm/go_js_wasm_exec" .
 
+  fuzz-smoke:
+    desc: 'Run every fuzz target for FUZZTIME (default 10s) as the fleet does, one process on one CPU (no GPU)'
+    vars:
+      # Every fuzz target; the NimbleTerminal fuzzing fleet
+      # (fuzz.nimbleterminal.com) discovers and runs them continuously.
+      FUZZ_TARGETS: FuzzMipChain FuzzEncodeSRGB FuzzCopyRows FuzzValidateLevels
+      FUZZTIME: '{{.FUZZTIME | default "10s"}}'
+    cmds:
+      - for: {var: FUZZ_TARGETS}
+        cmd: GOMAXPROCS=1 go test -mod=readonly -parallel=1 -run='^{{.ITEM}}$' -fuzz='^{{.ITEM}}$' -fuzztime={{.FUZZTIME}} .
+
   ci:
     desc: 'Run everything CI runs'
     cmds:
